@@ -161,7 +161,7 @@ export async function answerQuestion(question: string): Promise<CopilotAnswer> {
   }
 
   if (!apiBaseUrl()) {
-    return wrap("unavailable", serviceUnavailable("API_BASE_URL is not configured."));
+    return wrap("unavailable", serviceUnavailable("The monitoring service address is not configured."));
   }
 
   let snap: FleetSnapshot;

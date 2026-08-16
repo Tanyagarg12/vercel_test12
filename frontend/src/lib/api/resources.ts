@@ -38,7 +38,8 @@ export interface Loaded<T> {
   error: string | null;
 }
 
-const NOT_CONFIGURED = "API_BASE_URL is not set — add it to frontend/.env.local and restart.";
+const NOT_CONFIGURED =
+  "The dashboard is not connected to the monitoring platform — set the service address in frontend/.env.local and restart.";
 
 function describe(error: unknown): string {
   if (error instanceof ApiUnavailableError) return error.message;

@@ -13,6 +13,8 @@ export interface Column<T> {
   sortValue?: (row: T) => number | string;
   align?: "left" | "right";
   className?: string;
+  /** Applied to the header cell — set a width here to size the whole column. */
+  headerClassName?: string;
 }
 
 export interface FilterOption {
@@ -149,7 +151,11 @@ export function DataTable<T>({
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className={clsx("pb-2 pr-3 font-medium", column.align === "right" && "text-right")}
+                  className={clsx(
+                    "pb-2 pr-3 font-medium",
+                    column.align === "right" && "text-right",
+                    column.headerClassName,
+                  )}
                 >
                   {column.sortValue ? (
                     <button

@@ -27,9 +27,9 @@ export async function PageShell({
         locations={header.locations}
         dataAsOf={header.dataAsOf}
       />
-      {/* pb-4 is the only bottom gap; the floating copilot button clears the
+      {/* pb-3 is the only bottom gap; the floating copilot button clears the
           last row because panels end short of the viewport edge. */}
-      <div className="flex-1 px-5 pb-4 pt-4">{children}</div>
+      <div className="flex-1 px-5 pb-3 pt-3">{children}</div>
     </div>
   );
 }

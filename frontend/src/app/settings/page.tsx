@@ -58,8 +58,8 @@ export default async function SettingsPage() {
             ))}
           </ul>
           <p className="mt-4 text-[12px] text-text-muted">
-            Reference values only — the platform does its own scoring and does not expose its weights over the
-            API, so these are the dashboard&apos;s documented defaults rather than the live configuration.
+            Reference values only — the platform does its own scoring and does not expose its weights, so
+            these are the dashboard&apos;s documented defaults rather than the live configuration.
           </p>
         </Panel>
 
@@ -124,7 +124,7 @@ export default async function SettingsPage() {
         <Panel title="Live Environment">
           <dl className="space-y-3 text-[13px]">
             {[
-              ["Data source", fleet ? "Live platform API" : "Unavailable"],
+              ["Data source", fleet ? "Live monitoring platform" : "Unavailable"],
               ["Stations", fleet ? String(fleet.stations.total) : "—"],
               ["Chargers", fleet ? String(fleet.chargers.total) : "—"],
               ["Batteries", fleet ? String(fleet.batteries.total) : "—"],
@@ -138,8 +138,8 @@ export default async function SettingsPage() {
             ))}
           </dl>
           <p className="mt-4 text-[12px] text-text-muted">
-            All figures on this dashboard come from the platform API. The synthetic generator remains only as
-            a fallback for when the service is unreachable.
+            All figures on this dashboard come from the live monitoring platform. The synthetic generator
+            remains only as a fallback for when the service is unreachable.
           </p>
         </Panel>
         </div>

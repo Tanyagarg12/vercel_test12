@@ -56,7 +56,7 @@ export class ApiUnavailableError extends Error {
 
 async function getJson<T>(path: string): Promise<T> {
   const base = apiBaseUrl();
-  if (!base) throw new ApiUnavailableError("API_BASE_URL is not configured");
+  if (!base) throw new ApiUnavailableError("The monitoring service address is not configured");
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -84,7 +84,7 @@ async function getJson<T>(path: string): Promise<T> {
 
 async function postJson<T>(path: string, body: unknown): Promise<T> {
   const base = apiBaseUrl();
-  if (!base) throw new ApiUnavailableError("API_BASE_URL is not configured");
+  if (!base) throw new ApiUnavailableError("The monitoring service address is not configured");
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);

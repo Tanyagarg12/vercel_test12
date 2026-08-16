@@ -158,7 +158,7 @@ export function StatCard({
                         className="block text-[12px] font-semibold tabular-nums"
                         style={{ color: riskColor(item.risk) }}
                       >
-                        {Math.round(item.risk)}%
+                        Risk {Math.round(item.risk)}%
                       </span>
                       {item.tag && <span className="block text-[10.5px] text-text-muted">{item.tag}</span>}
                     </span>

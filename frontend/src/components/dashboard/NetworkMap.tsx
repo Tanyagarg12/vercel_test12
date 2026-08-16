@@ -1,14 +1,41 @@
 import Link from "next/link";
 import { CITIES, type Station } from "@/lib/mock";
+import {
+  INDIA_COS_MID,
+  INDIA_MAX_LAT,
+  INDIA_MIN_LNG,
+  INDIA_PATH,
+  INDIA_SCALE,
+  INDIA_VIEW_H,
+  INDIA_VIEW_W,
+} from "./indiaOutline";
 
-const LAT_RANGE: [number, number] = [7, 33];
-const LNG_RANGE: [number, number] = [67, 92];
-
+/** Same projection the outline was generated with, expressed as a percentage
+ * of the container, so HTML markers land exactly on the SVG boundary. */
 function project(lat: number, lng: number): { x: number; y: number } {
-  const x = ((lng - LNG_RANGE[0]) / (LNG_RANGE[1] - LNG_RANGE[0])) * 100;
-  const y = ((LAT_RANGE[1] - lat) / (LAT_RANGE[1] - LAT_RANGE[0])) * 100;
-  return { x: Math.min(97, Math.max(3, x)), y: Math.min(96, Math.max(4, y)) };
+  const x = ((lng - INDIA_MIN_LNG) * INDIA_COS_MID * INDIA_SCALE * 100) / INDIA_VIEW_W;
+  const y = ((INDIA_MAX_LAT - lat) * INDIA_SCALE * 100) / INDIA_VIEW_H;
+  return { x: Math.min(99, Math.max(1, x)), y: Math.min(99, Math.max(1, y)) };
 }
+
+/** Label placement per city, so neighbouring metros (Mumbai/Pune,
+ * Bengaluru/Chennai) don't overlap each other or their marker clusters. */
+const LABEL_SIDE: Record<string, "above" | "left" | "right"> = {
+  Delhi: "above",
+  Ahmedabad: "left",
+  Kolkata: "right",
+  Mumbai: "left",
+  Pune: "right",
+  Hyderabad: "right",
+  Bengaluru: "left",
+  Chennai: "right",
+};
+
+const LABEL_STYLE: Record<"above" | "left" | "right", React.CSSProperties> = {
+  above: { transform: "translate(-50%, -100%)", marginTop: "-3.4%" },
+  left: { transform: "translate(-100%, -50%)", marginLeft: "-3.6%" },
+  right: { transform: "translate(0, -50%)", marginLeft: "3.6%" },
+};
 
 function markerColor(station: Station, atRisk: number): string {
   if (station.status === "OFFLINE") return "var(--text-muted)";
@@ -32,29 +59,25 @@ export function NetworkMap({
   atRiskByStation: Map<string, number>;
 }) {
   return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-[var(--border-hairline)] bg-[var(--surface-2)]">
-      <svg className="absolute inset-0 h-full w-full" aria-hidden>
-        <defs>
-          <pattern id="mapGrid" width="6.25%" height="10%" patternUnits="userSpaceOnUse">
-            <path d="M 0 0 L 0 1000 M 0 0 L 1000 0" stroke="var(--gridline)" strokeWidth="1" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#mapGrid)" />
+    <div
+      className="relative mx-auto w-full max-w-[520px] overflow-hidden rounded-lg"
+      style={{ aspectRatio: `${INDIA_VIEW_W} / ${INDIA_VIEW_H}` }}
+    >
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox={`0 0 ${INDIA_VIEW_W} ${INDIA_VIEW_H}`}
+        preserveAspectRatio="none"
+        aria-hidden
+      >
+        <path
+          d={INDIA_PATH}
+          fill="color-mix(in srgb, var(--series-1) 7%, var(--surface-2))"
+          stroke="color-mix(in srgb, var(--series-1) 45%, var(--text-muted))"
+          strokeWidth={1}
+          vectorEffect="non-scaling-stroke"
+          strokeLinejoin="round"
+        />
       </svg>
-
-      {CITIES.map((city) => {
-        const { x, y } = project(city.lat, city.lng);
-        return (
-          <span
-            key={city.name}
-            // Sits above the cluster so the markers don't cover the label.
-            className="pointer-events-none absolute -translate-x-1/2 -translate-y-full text-[10px] font-semibold uppercase tracking-wide text-text-secondary"
-            style={{ left: `${x}%`, top: `${Math.max(4, y - 7)}%` }}
-          >
-            {city.name}
-          </span>
-        );
-      })}
 
       {stations.map((station) => {
         const { x, y } = project(station.lat, station.lng);
@@ -69,10 +92,32 @@ export function NetworkMap({
             style={{ left: `${x}%`, top: `${y}%` }}
           >
             <span
-              className="block h-2.5 w-2.5 rounded-full ring-2 ring-[var(--surface-1)] transition-transform hover:scale-[1.8]"
-              style={{ backgroundColor: color }}
+              className="block h-2 w-2 rounded-full ring-1 ring-white/80 transition-transform hover:scale-[2]"
+              style={{ backgroundColor: color, boxShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
             />
           </Link>
+        );
+      })}
+
+      {/* Labels render above the marker clusters, with a halo so they stay
+          legible over dense dots. */}
+      {CITIES.map((city) => {
+        const { x, y } = project(city.lat, city.lng);
+        const side = LABEL_SIDE[city.name] ?? "above";
+        return (
+          <span
+            key={city.name}
+            className="pointer-events-none absolute z-10 whitespace-nowrap text-[9.5px] font-semibold uppercase tracking-wide text-text-primary"
+            style={{
+              left: `${x}%`,
+              top: `${y}%`,
+              textShadow:
+                "0 0 3px var(--surface-1), 0 0 3px var(--surface-1), 0 0 6px var(--surface-1)",
+              ...LABEL_STYLE[side],
+            }}
+          >
+            {city.name}
+          </span>
         );
       })}
     </div>

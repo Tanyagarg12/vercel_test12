@@ -28,7 +28,7 @@ export default async function DashboardPage({
   // The header's date control writes the trend window here.
   const { days } = await searchParams;
   const trendDays = Math.min(365, Math.max(1, Number(days) || 7));
-  const { data, stations, chargers, fallbackReason } = await getDashboardData(trendDays);
+  const { data, stations, chargers } = await getDashboardData(trendDays);
   const { stations: stationCounts, chargers: chargerCounts, batteries } = data;
 
   // Each card ranks its own assets and shows only the top few, so the layout
@@ -107,7 +107,7 @@ export default async function DashboardPage({
   return (
     <PageShell title="Asset Intelligence Platform" subtitle="Overview of Stations, Chargers & Batteries">
       <div className="flex flex-col gap-3">
-        <DataSourceBadge source={data.source} fallbackReason={fallbackReason} />
+        <DataSourceBadge source={data.source} />
         <CriticalAlertBanner rows={data.atRisk} />
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -210,7 +210,6 @@ export default async function DashboardPage({
           {data.healthTrend && (
             <Panel
               title="Battery Health Trend"
-              titleNote="(share of batteries by health band)"
               className="lg:col-span-5"
               action={
                 <span className="rounded-lg border border-[var(--border-hairline)] px-2.5 py-1 text-[12px] text-text-secondary">

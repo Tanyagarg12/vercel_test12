@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unknown action." }, { status: 400 });
   } catch (error) {
     const message =
-      error instanceof ApiUnavailableError ? error.message : "Unexpected error contacting the API.";
+      error instanceof ApiUnavailableError ? error.message : "Unexpected error contacting the service.";
     // 502: the request was well-formed, the upstream service is the problem.
     return NextResponse.json({ error: message }, { status: 502 });
   }

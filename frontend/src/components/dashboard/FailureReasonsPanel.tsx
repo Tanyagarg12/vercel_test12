@@ -53,7 +53,6 @@ export function FailureReasonsPanel({
               >
                 {scenario.label}
               </span>
-              <span className="block text-[11px] text-text-muted">Scenario {scenario.section}</span>
             </span>
             <span
               className="flex-none text-[13px] font-semibold tabular-nums"

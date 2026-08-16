@@ -22,7 +22,7 @@ export function Topbar({
   dataAsOf?: string | null;
 }) {
   return (
-    <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[var(--border-hairline)] bg-[var(--surface-1)] px-5 py-2">
+    <header className="sticky top-0 z-30 flex min-h-[58px] flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[var(--border-hairline)] bg-[var(--surface-1)] px-5 py-2">
       <div className="min-w-0">
         {/* The product name doubles as the way back to the dashboard. */}
         <Link href="/" className="inline-block rounded hover:opacity-80">
@@ -51,11 +51,11 @@ export function Topbar({
 
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--series-1)] text-[13px] font-semibold text-white">
-            AU
+            T
           </span>
           <span className="text-[13px] leading-tight">
-            <span className="block font-semibold text-text-primary">Admin User</span>
-            <span className="block text-text-muted">Operations Head</span>
+            <span className="block font-semibold text-text-primary">Tanya</span>
+            <span className="block text-text-muted">Read Only</span>
           </span>
         </div>
       </div>

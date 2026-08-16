@@ -41,8 +41,7 @@ export default function MapViewPage() {
             ))}
           </div>
           <p className="mt-3 text-[12px] text-text-muted">
-            Simulated map for the Phase 1 POC — markers are plotted from station coordinates. Click a marker to
-            open that station.
+            Markers are plotted from station coordinates — click a marker to open that station.
           </p>
         </Panel>
 

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Predict Plus — AI Asset Intelligence Platform",
-  description: "Phase 1 POC — Operations Dashboard",
+  description: "Operations Dashboard",
 };
 
 /** Set to false to hide the nav and run the dashboard as a single screen. */

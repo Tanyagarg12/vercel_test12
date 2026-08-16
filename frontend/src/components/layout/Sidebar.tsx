@@ -11,7 +11,6 @@ import {
   LayoutGrid,
   Map,
   Plug,
-  Settings,
   Sparkles,
   Warehouse,
 } from "lucide-react";
@@ -35,7 +34,6 @@ export function Sidebar({ alertCount }: { alertCount: number }) {
     { href: "/ai-predictions", label: "AI Predictions", icon: Sparkles },
     { href: "/alerts", label: "Alerts", icon: Bell, badge: alertCount },
     { href: "/map-view", label: "Map View", icon: Map },
-    { href: "/settings", label: "Settings", icon: Settings },
   ];
 
   return (

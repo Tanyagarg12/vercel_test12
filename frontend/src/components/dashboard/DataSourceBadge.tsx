@@ -8,13 +8,7 @@ import type { DataSource } from "@/lib/api/normalise";
  * on a deployed environment where a missing API_BASE_URL is invisible
  * otherwise.
  */
-export function DataSourceBadge({
-  source,
-  fallbackReason,
-}: {
-  source: DataSource;
-  fallbackReason: string | null;
-}) {
+export function DataSourceBadge({ source }: { source: DataSource }) {
   if (source === "api") return null;
 
   return (
@@ -30,7 +24,6 @@ export function DataSourceBadge({
       <span className="text-text-secondary">
         The monitoring platform is unreachable, so these figures are simulated and must not be used
         operationally.
-        {fallbackReason ? ` (${fallbackReason})` : ""}
       </span>
     </div>
   );
