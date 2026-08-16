@@ -93,6 +93,7 @@ export function StationsTable({ rows }: { rows: StationRow[] }) {
       rows={rows}
       columns={columns}
       rowKey={(r) => r.stationId}
+      rowHref={(r) => `/stations/${r.stationId}`}
       searchFields={(r) => [r.stationId, r.name]}
       searchPlaceholder="Search station…"
       filters={{

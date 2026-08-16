@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight, ChevronsUpDown, Search } from "lucide-react";
 
@@ -36,6 +37,8 @@ interface DataTableProps<T> {
   initialSort?: { key: string; direction: "asc" | "desc" };
   pageSize?: number;
   emptyMessage?: string;
+  /** Makes the whole row navigate there on click, not just an inline link. */
+  rowHref?: (row: T) => string;
 }
 
 export function DataTable<T>({
@@ -49,7 +52,9 @@ export function DataTable<T>({
   initialSort,
   pageSize = 15,
   emptyMessage = "Nothing to show.",
+  rowHref,
 }: DataTableProps<T>) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [filterValue, setFilterValue] = useState(initialFilter ?? "all");
   const [sort, setSort] = useState(initialSort);
@@ -177,7 +182,11 @@ export function DataTable<T>({
           </thead>
           <tbody className="divide-y divide-[var(--border-hairline)]">
             {pageRows.map((row) => (
-              <tr key={rowKey(row)} className="hover:bg-[var(--surface-2)]">
+              <tr
+                key={rowKey(row)}
+                className={clsx("hover:bg-[var(--surface-2)]", rowHref && "cursor-pointer")}
+                onClick={rowHref ? () => router.push(rowHref(row)) : undefined}
+              >
                 {columns.map((column) => (
                   <td
                     key={column.key}

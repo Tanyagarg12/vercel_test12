@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Clock, Info, Sparkles } from "lucide-react";
+import { ArrowLeft, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
 import { Panel } from "@/components/ui/Panel";
 import { ApiErrorState } from "@/components/ui/ApiErrorState";
@@ -189,27 +189,6 @@ export default async function BatteryDetailPage({
           </div>
         </Panel>
 
-        {/* Telemetry charts and the event feed need endpoints that do not exist
-            yet (GET /batteries/{id}/telemetry and /events both 404), so the
-            gap is stated rather than filled with placeholder data. */}
-        <Panel>
-          <div className="flex items-start gap-2.5 text-[13px] text-text-secondary">
-            <Info size={16} className="mt-0.5 flex-none text-[var(--series-1)]" />
-            <span>
-              <span className="font-semibold text-text-primary">
-                Telemetry charts and the event feed are not shown for this pack.
-              </span>{" "}
-              They need <code className="rounded bg-[var(--surface-2)] px-1 py-0.5">GET /batteries/{"{id}"}/telemetry</code>{" "}
-              and <code className="rounded bg-[var(--surface-2)] px-1 py-0.5">GET /batteries/{"{id}"}/events</code>,
-              which the service does not expose yet. The chart component is already written (src/components/battery/TelemetryChart.tsx) and needs only to be wired back in once the endpoint exists.
-            </span>
-          </div>
-          <div className="mt-3 flex items-center gap-1.5 text-[12px] text-text-muted">
-            <Clock size={12} />
-            Dock-level telemetry is available at <code className="mx-1">/assets/{"{dock_id}"}/telemetry</code> if a
-            per-dock view would be useful in the meantime.
-          </div>
-        </Panel>
       </div>
     </PageShell>
   );

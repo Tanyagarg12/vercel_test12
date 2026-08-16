@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, BatteryCharging, Info, LayoutGrid, Plug } from "lucide-react";
+import { ArrowLeft, BatteryCharging, LayoutGrid, Plug } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
 import { Panel } from "@/components/ui/Panel";
 import { ApiErrorState } from "@/components/ui/ApiErrorState";
@@ -134,21 +134,6 @@ export default async function StationDetailPage({
           )}
         </Panel>
 
-        {/* Batteries cannot be listed per station until they carry a station_id. */}
-        <Panel>
-          <div className="flex items-start gap-2.5 text-[13px] text-text-secondary">
-            <Info size={16} className="mt-0.5 flex-none text-[var(--series-1)]" />
-            <span>
-              <span className="font-semibold text-text-primary">
-                Batteries at this station are not listed.
-              </span>{" "}
-              Battery records carry no <code className="rounded bg-[var(--surface-2)] px-1 py-0.5">station_id</code>,
-              so they cannot be filtered by station yet. Adding that field (or a{" "}
-              <code className="rounded bg-[var(--surface-2)] px-1 py-0.5">GET /stations/{"{id}"}/batteries</code>{" "}
-              endpoint) is all that is needed to populate this panel.
-            </span>
-          </div>
-        </Panel>
       </div>
     </PageShell>
   );

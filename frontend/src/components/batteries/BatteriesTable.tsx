@@ -131,6 +131,7 @@ export function BatteriesTable({ rows }: { rows: BatteryRow[] }) {
       rows={rows}
       columns={columns}
       rowKey={(r) => r.batteryId}
+      rowHref={(r) => `/batteries/${r.batteryId}`}
       searchFields={(r) => [r.batteryId, r.stationId ?? "", r.likelyIssue, r.riskCategoryRaw, r.priority]}
       searchPlaceholder="Search battery, issue or priority…"
       filters={{

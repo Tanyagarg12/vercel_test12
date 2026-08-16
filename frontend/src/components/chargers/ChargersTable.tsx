@@ -76,6 +76,8 @@ export function ChargersTable({ rows }: { rows: ChargerRow[] }) {
       rows={rows}
       columns={columns}
       rowKey={(r) => r.chargerId}
+      // No charger detail screen exists; a charger's home is its station page.
+      rowHref={(r) => `/stations/${r.stationId}`}
       searchFields={(r) => [r.chargerId, r.dockId, r.stationId]}
       searchPlaceholder="Search charger, dock or station…"
       filters={{
