@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Predict Plus — AI Asset Intelligence Platform",
+  title: "AI Asset Intelligence Platform",
   description: "Operations Dashboard",
 };
 
@@ -43,7 +43,14 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex h-full min-h-screen">
         {SHOW_SIDEBAR && <Sidebar alertCount={alertCount} />}
-        <main className="flex-1 overflow-y-auto bg-[var(--surface-0)]">{children}</main>
+        {/* Footer sits inside the scroll container, after the page content, so
+            it scrolls away with the page instead of staying pinned on screen. */}
+        <main className="flex-1 overflow-y-auto bg-[var(--surface-0)]">
+          {children}
+          <footer className="border-t border-[var(--border-hairline)] bg-[var(--surface-1)] px-5 py-1.5 text-left text-[11px] text-text-muted">
+            Powered by Circumcircle Pvt Limited
+          </footer>
+        </main>
         <CopilotWidget />
       </body>
     </html>
